@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+        
+        padding-top: 150px;
+        margin: 0px 200px;
+        }
+        form{
+        border: 2px solid blue;
+        text-align: center;
+        }
+        label{
+        margin-top: 20px;
+        display: inline-block;
+        text-align: left;
+        width: 150px;
+        }
+ 
+        input{
+        width: 30%;
+        margin: 8px 0;
+        padding: 7px 10px;
+        display: inline-block;
+        border:1px solid #ccc;
+        box-sizing: border-box;
+        border-radius: 10px;
+        border-width: 2px;
+        }
+        span{
+        color: red;
+        position: absolute;
+        }
+        button{
+        background-color:#de0c1d;
+        width: 10%;
+        padding: 9px 5px;
+        margin:5px 0;
+        cursor:pointer;
+        border:none;
+        color:#ffffff;
+        margin-left: 40px;
+        }        
+    </style>
+</head>
+<body>
+    <form action="" method="post">
+        {% csrf_token %}
+        <h2>Login</h2>
+        <label for="">Username</label>
+        <input type="email" name="logusername" id="l1"><br>
+        <span class="loginerror" id="logname"></span><br><br>
+        <label for="">Password</label>
+        <input type="password" name="logpassword" id="l2"><br>
+        <span class="loginerror" id="logpass"></span><br><br>
+        <button onclick="return Logvalidate()" type="submit">Login</button><br><br>
+        <p>{{fail}}</p>
+    </form>
+
+    <script>
+        var username_error = document.getElementById('logname');
+        var password_error = document.getElementById('logpass');
+        function Logvalidate(){
+            var username = document.getElementById('l1').value;
+            var password = document.getElementById('l2').value;
+            login1 = 1;
+            login2 = 1;
+
+            if (username === ""){
+                document.getElementById('l1').style.borderColor = "red";
+                username_error.innerHTML = "Please enter your username(email)";
+                login1 = 0;
+            }
+            else{
+                var regex = /^\S+@\S+\.\S+$/;
+                if(regex.test(username) === false) {
+                    document.getElementById('l1').style.borderColor = "red";
+                    username_error.innerHTML = "Please enter correct username";
+                    login1 = 0;
+                } 
+                else {
+                    login1 = 1;
+                }
+            } 
+
+            if (password === ""){
+                document.getElementById('l2').style.borderColor = "red";
+                password_error.innerHTML = "Please enter your password";
+                login2 = 0;
+            }
+            else{
+                var regex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+                if(regex.test(password) === false) {
+                    document.getElementById('l2').style.borderColor = "red";
+                    password_error.innerHTML = "Please enter correct password";
+                    login2 = 0;
+                } 
+                else {
+                    login2 = 1;
+                }
+            } 
+
+            if(login1 === 1 && login2 == 1){
+                return true;  
+            }
+            else{
+                return false;
+            }
+ 
+        }
+    </script>
+</body>
+</html>

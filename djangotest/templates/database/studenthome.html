@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            text-align: center;
+            margin: 100px;
+        }
+        div{
+            background-color: rgb(148, 206, 94);
+            border: 2px solid;
+            padding: 30px;
+        }
+        a{
+            text-decoration: none;
+            color: bisque;
+        }
+        button{
+            background-color: brown;
+            width: 80px;
+            height: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h1><u>Welcome Student</u></h1><br>
+        <h3>{{student_data.st_name}}</h3><br>
+        <h3>{{student_data.st_contact}}</h3><br>
+        <h3>{{student_data.st_email}}</h3><br><br>
+        <button><a href="{% url 'student:update_student' student_data.id %}">Update</a></button><br><br>   
+        <button><a href="{% url 'student:logout' %}">Logout</a></button>
+    </div>
+</body>
+</html>

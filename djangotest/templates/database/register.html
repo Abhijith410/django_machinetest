@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Student</title>
+    <style>
+        body{
+        margin: 30px 100px;
+        text-align: center;
+        border: 1px solid blue;
+        }
+
+        label{
+        margin-top: 20px;
+        display: inline-block;
+        text-align: left;
+        width: 150px;
+        }
+ 
+        input{
+        width: 30%;
+        margin: 8px 0;
+        padding: 7px 10px;
+        display: inline-block;
+        border:1px solid #ccc;
+        box-sizing: border-box;
+        border-radius: 10px;
+        border-width: 2px;
+        }
+
+        span{    
+        color: red;
+        text-align: right;
+        position: absolute;
+        }
+ 
+        button{
+        background-color:#4CAF50;
+        width: 10%;
+        padding: 9px 5px;
+        margin:5px 0;
+        cursor:pointer;
+        border:none;
+        color:#ffffff;
+        margin-left: 80px;
+        }
+ 
+        button:hover{
+        opacity:0.8;
+        }
+
+    </style>
+</head>
+<body><br>
+    <a href="{% url 'student:adhomepage' %}">Home Page</a><br>
+    <form name="" action="{% url 'student:register' %}" method="post">
+        {% csrf_token %}
+        <h2>Register Student</h2><br>  
+        <label for="" id="sname">Name </label>
+        <input type="text" name="sname" id="r1"><br/>
+        <span class="registererror" id="regname"></span><br>
+        <label for="" id="scontact">Contact </label>
+        <input type="tel" name="scontact" id="r2"><br/>
+        <span class="registererror" id="regcontact"></span><br>
+        <label for="" id="semail">Email </label>
+        <input type="email" name="semail" id="r3"><br/>
+        <span class="registererror" id="regemail"></span><br>
+        <label for="" id="susername">Username </label>
+        <input type="email" name="susername" id="r4"><br/>
+        <span class="registererror" id="regusername"></span><br> 
+        <label for="" id="spassword">Password </label>
+        <input type="password" name="spassword" id="r5"><br/>
+        <span class="registererror" id="regpass"></span><br> 
+        <label for="" id="sconfirmpassword">Confirm Password </label>
+        <input type="password" name="sconfirmpassword" id="r6"><br/>
+        <span class="registererror" id="regconfpass"></span><br><br> 
+        <button onclick="return RegValidate()" type="submit" value="Submit" id="button">Add Student</button><br><br>
+        <p>{{msg}}</p>
+    </form>
+
+    <script>
+        function RegValidate(){
+            var name_error = document.getElementById('regname');
+            var name = document.getElementById('r1').value;
+            var contact_error = document.getElementById('regcontact');
+            var contact = document.getElementById('r2').value;
+            var email_error = document.getElementById('regemail');
+            var email = document.getElementById('r3').value;
+            var username_error = document.getElementById('regusername');
+            var username = document.getElementById('r4').value;
+            var pass_error = document.getElementById('regpass');
+            var pass = document.getElementById('r5').value;
+            var confpass_error = document.getElementById('regconfpass');
+            var confpass = document.getElementById('r6').value;
+            reg1 = 1;
+            reg2 = 1;
+            reg3 = 1;
+            reg4 = 1;
+            reg5 = 1;
+            reg6 = 1;
+
+            if(name == ""){
+                document.getElementById('r1').style.borderColor = "red";
+                name_error.innerHTML = "Please enter student name";
+                reg1 = 0;
+            }
+            else{
+                var regex = /^[a-zA-Z\s]+$/;
+                if(regex.test(name) === false) {
+                    document.getElementById('r1').style.borderColor = "red";
+                    name_error.innerHTML = "Please enter proper name";
+                    reg1 = 0;
+                } 
+                else {
+                    reg1 = 1;
+                }
+            }  
+
+            if(contact == ""){
+                document.getElementById('r2').style.borderColor = "red";
+                contact_error.innerHTML = "Please enter contact number";
+                reg2 = 0;
+            }
+            else{
+                var regex = /^(\+91[\-\s]?)?[0]?(91)?[789]\d{9}$/;
+                if(regex.test(contact) === false) {
+                    document.getElementById('r2').style.borderColor = "red";
+                    contact_error.innerHTML = "Please enter correct contact number";
+                    reg2 = 0;
+                } 
+                else {
+                    reg2 = 1;
+                }
+            }
+
+            if(email == ""){
+                document.getElementById('r3').style.borderColor = "red";
+                email_error.innerHTML = "Please enter email";
+                reg3 = 0;
+            }
+            else{
+                var regex = /^\S+@\S+\.\S+$/;
+                if(regex.test(email) === false) {
+                    document.getElementById('r3').style.borderColor = "red";
+                    email_error.innerHTML = "Please enter correct email";
+                    reg3 = 0;
+                } 
+                else {
+                    reg3 = 1;
+                }
+            }
+
+            if(username == ""){
+                document.getElementById('r4').style.borderColor = "red";
+                username_error.innerHTML = "Please enter email as username";
+                reg4 = 0;
+            }
+            else{
+                var regex = /^\S+@\S+\.\S+$/;
+                if(regex.test(username) === false) {
+                    document.getElementById('r4').style.borderColor = "red";
+                    username_error.innerHTML = "Please enter correct email";
+                    reg4 = 0;
+                } 
+                else {
+                    reg4 = 1;
+                }
+            }
+
+            if(pass == ""){
+                document.getElementById('r5').style.borderColor = "red";
+                pass_error.innerHTML = "Please enter password(Min 8 characters-letter,number and special character)";
+                reg5 = 0;
+            }
+            else{
+                var regex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+                if(regex.test(pass) === false) {
+                    document.getElementById('r5').style.borderColor = "red";
+                    pass_error.innerHTML = "Please enter proper password";
+                    reg5 = 0;
+                } 
+                else {
+                    reg5 = 1;
+                }
+            }
+            
+            if(confpass == ""){
+                document.getElementById('r6').style.borderColor = "red";
+                confpass_error.innerHTML = "Please re-enter password";
+                reg6 = 0;
+            }
+            else{
+                if(confpass != pass) {
+                    document.getElementById('r6').style.borderColor = "red";
+                    confpass_error.innerHTML = "Please repeat the same password";
+                    reg6 = 0;
+                } 
+                else {
+                    reg6 = 1;
+                }
+            }
+
+            if(reg1 === 1 && reg2 ===1 && reg3 === 1 && reg4 === 1 && reg5 === 1 && reg6 ===1){
+                return true;  
+            }
+            else{
+                return false;
+            }
+
+        }
+    </script>
+</body>
+</html>

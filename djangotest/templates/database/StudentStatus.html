@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            margin: 100px;
+            text-align: center;
+            border: 2px solid;
+        }
+        table{
+            padding: 30px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 30px;
+        }
+        td,th{
+            border: 1px solid;
+            padding: 10px;
+            text-align: center;
+        }
+        a{
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <h2>View Active/Inactive Students</h2>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Username</th>
+                <th>Active/Inactive</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for std in std_data %}
+            <tr>
+                <td>{{std.id}}</td>
+                <td>{{std.st_name}}</td>
+                <td>{{std.st_username}}</td>
+                <td><a href="{% url 'student:status' std.id %}">{{std.st_status}}</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{% url 'student:adhomepage' %}">Home Page</a><br><br>
+</body>
+</html>

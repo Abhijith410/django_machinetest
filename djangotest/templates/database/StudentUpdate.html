@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+        margin: 30px 100px;
+        text-align: center;
+        border: 1px solid rgb(146, 0, 0);
+        }
+
+        label{
+        margin-top: 20px;
+        display: inline-block;
+        text-align: center;
+        width: 150px;
+        }
+ 
+        input{
+        width: 30%;
+        margin: 8px 0;
+        padding: 7px 10px;
+        display: inline-block;
+        border:1px solid #ccc;
+        box-sizing: border-box;
+        border-radius: 10px;
+        border-width: 2px;
+        }
+
+        span{
+        color: red;
+        position: absolute;
+        }
+ 
+        button{
+        background-color:#05c1bb;
+        width: 10%;
+        padding: 9px 5px;
+        margin:5px 0;
+        cursor:pointer;
+        border:none;
+        color:#ffffff;
+        margin-left: 50px;
+        }
+ 
+        button:hover{
+        opacity:0.8;
+        }
+
+    </style>
+</head>
+<body>
+    <form onsubmit="if(!confirm('Confirm changes?')){return false;}" action="" method="post">
+        {% csrf_token %}
+        <h2>Update Profile</h2><br>  
+        <label for="" id="sname">Name </label>
+        <input type="text" class="form-control" name="upname" value="{{student.st_name}}" id="u1"><br/>
+        <span class="updatererror" id="updtname"></span><br> 
+        <label for="" id="scontact">Contact </label>
+        <input type="text" class="form-control" name="upcontact" value="{{student.st_contact}}" id="u2"><br/>
+        <span class="updatererror" id="updtcontact"></span><br> 
+        <label for="" id="semail">Email </label>
+        <input type="text" class="form-control" name="upemail" value="{{student.st_email}}" id="u3"><br/>
+        <span class="updatererror" id="updtemail"></span><br>
+        <label for="" id="susername">Username </label>
+        <input type="text" class="form-control" name="upusername" value="{{student.st_username}}" id="u4"><br/>
+        <span class="updatererror" id="updtusername"></span><br> 
+        <label for="" id="spassword">Password </label>
+        <input type="password" class="form-control" name="uppassword" value="{{student.st_password}}" id="u5"><br/>
+        <span class="updatererror" id="updtpass"></span><br><br> 
+        <button onclick="return UpdValidate()" type="submit" id="button">Update</button><br><br>
+    </form>
+
+    <script>
+        var name1_error = document.getElementById('updtname');
+        var contact1_error = document.getElementById('updtcontact');
+        var email1_error = document.getElementById('updtemail');
+        var username1_error = document.getElementById('updtusername');
+        var pass1_error = document.getElementById('updtpass');
+        function UpdValidate(){
+            var name1 = document.getElementById('u1').value;
+            var contact1 = document.getElementById('u2').value;
+            var email1 = document.getElementById('u3').value;
+            var username1 = document.getElementById('u4').value;
+            var pass1 = document.getElementById('u5').value;
+            upd1 = 1;
+            upd2 = 1;
+            upd3 = 1;
+            upd4 = 1;
+            upd5 = 1;
+            if(name1 === ""){
+                document.getElementById('u1').style.borderColor = "red";
+                name1_error.innerHTML = "Please enter your name";
+                upd1 = 0;
+            }
+            else{
+                var regex = /^[a-zA-Z\s]+$/;
+                if(regex.test(name1) === false) {
+                    document.getElementById('u1').style.borderColor = "red";
+                    name1_error.innerHTML = "Please enter proper name";
+                    upd1 = 0;
+                } 
+                else {
+                    upd1 = 1;
+                }
+            }  
+
+            if(contact1 == ""){
+                document.getElementById('u2').style.borderColor = "red";
+                contact1_error.innerHTML = "Please enter contact number";
+                upd2 = 0;
+            }
+            else{
+                var regex = /^(\+91[\-\s]?)?[0]?(91)?[789]\d{9}$/;
+                if(regex.test(contact1) === false) {
+                    document.getElementById('u2').style.borderColor = "red";
+                    contact1_error.innerHTML = "Please enter correct contact number";
+                    upd2 = 0;
+                } 
+                else {
+                    upd2 = 1;
+                }
+            }
+
+            if(email1 == ""){
+                document.getElementById('u3').style.borderColor = "red";
+                email1_error.innerHTML = "Please enter email";
+                upd3 = 0;
+            }
+            else{
+                var regex = /^\S+@\S+\.\S+$/;
+                if(regex.test(email1) === false) {
+                    document.getElementById('u3').style.borderColor = "red";
+                    email1_error.innerHTML = "Please enter correct email";
+                    upd3 = 0;
+                } 
+                else {
+                    upd3 = 1;
+                }
+            }
+
+            if(username1 == ""){
+                document.getElementById('u4').style.borderColor = "red";
+                username1_error.innerHTML = "Please enter email as username";
+                upd4 = 0;
+            }
+            else{
+                var regex = /^\S+@\S+\.\S+$/;
+                if(regex.test(username1) === false) {
+                    document.getElementById('u4').style.borderColor = "red";
+                    username1_error.innerHTML = "Please enter correct email";
+                    upd4 = 0;
+                } 
+                else {
+                    upd4 = 1;
+                }
+            }
+
+            if(pass1 == ""){
+                document.getElementById('u5').style.borderColor = "red";
+                pass1_error.innerHTML = "Please enter password(Min 6 characters with atleast one number and a special character)";
+                upd5 = 0;
+            }
+            else{
+                var regex = /^[a-zA-Z0-9!@#$%^&*]{6,16}$/;
+                if(regex.test(pass1) === false) {
+                    document.getElementById('u5').style.borderColor = "red";
+                    pass1_error.innerHTML = "Please enter proper password";
+                    upd5 = 0;
+                } 
+                else {
+                    upd5 = 1;
+                }
+            }
+
+            if(upd1 == 1 && upd2 == 1 && upd3 == 1 && upd4 == 1 && upd5 == 1){
+                return true;  
+            }
+            else{
+                return false;
+            }
+
+        }
+    </script>
+</body>
+</html>
